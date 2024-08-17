@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import usersRoutes from './routes/usersRoutes';
 import productsRoutes from './routes/productsRoutes';
 import corsConfig from './config/corsConfig';
+import { connectDB } from './config/dbConfig';
 
 dotenv.config();
 
@@ -14,13 +15,8 @@ app.use(express.json());
 
 app.use(corsConfig);
 
-// Conectar ao MongoDB
-mongoose.connect(process.env.MONGO_URI as string)
-    .then(() => console.log('Conectado ao MongoDB'))
-    .catch((error) => console.error('Erro ao conectar ao MongoDB:', error));
+connectDB();
 
-
-// Usar as rotas
 app.use('/api/users', usersRoutes);
 app.use('/api/products', productsRoutes);
 
