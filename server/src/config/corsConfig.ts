@@ -1,5 +1,3 @@
-// src/config/corsConfig.ts
-
 import cors, { CorsOptions } from 'cors';
 
 const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || [];
