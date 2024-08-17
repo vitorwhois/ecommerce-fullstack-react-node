@@ -17,6 +17,10 @@ app.use(corsConfig);
 
 connectDB();
 
+app.get('/api/health', (req, res) => {
+  res.send('Hello World');
+});
+
 app.use('/api/users', usersRoutes);
 app.use('/api/products', productsRoutes);
 
