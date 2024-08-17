@@ -13,21 +13,18 @@ export function ProductSection() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/data/products.json');
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products/products`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        if (data.success) {
-          setProducts(data.products);
-        } else {
-          console.error('Error: Unsuccessful fetch');
-        }
+        setProducts(data);  
+  
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-
+  
     fetchProducts();
   }, []);
 
