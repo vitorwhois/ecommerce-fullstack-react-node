@@ -35,10 +35,6 @@
     "pre-commit": "^1.2.2",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-]
+  }
+  
 }

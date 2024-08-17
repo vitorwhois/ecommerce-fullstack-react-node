@@ -1,0 +1,1 @@
+{"version":3,"file":"productsRoutes.js","sourceRoot":"","sources":["../../src/routes/productsRoutes.ts"],"names":[],"mappings":";;AAAA,qCAAiC;AACjC,0EAAqG;AAErG,MAAM,MAAM,GAAG,IAAA,gBAAM,GAAE,CAAC;AAExB,MAAM,CAAC,GAAG,CAAC,WAAW,EAAE,mCAAc,CAAC,CAAC;AACxC,MAAM,CAAC,GAAG,CAAC,SAAS,EAAE,oCAAe,CAAC,CAAC;AACvC,MAAM,CAAC,GAAG,CAAC,aAAa,EAAE,sCAAiB,CAAC,CAAC;AAG7C,kBAAe,MAAM,CAAC"}
