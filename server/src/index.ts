@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import usersRoutes from './routes/usersRoutes';
 import productsRoutes from './routes/productsRoutes';
-import cors from 'cors';
+import corsConfig from './config/corsConfig';
 
 dotenv.config();
 
@@ -11,13 +11,8 @@ const app: Application = express();
 
 // Middleware para analisar JSON
 app.use(express.json());
-const corsOptions = {
-    origin: 'http://localhost:5173', // Frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-  };
-  
-  app.use(cors(corsOptions));
+
+app.use(corsConfig);
 
 // Conectar ao MongoDB
 mongoose.connect(process.env.MONGO_URI as string)
