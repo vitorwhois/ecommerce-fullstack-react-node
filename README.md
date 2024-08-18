@@ -98,22 +98,22 @@ O objetivo principal do projeto é criar uma API e um frontend responsivo para u
 
 ### Autenticação
 
-    Registro de usuário: Criação de um novo usuário com nome, email e senha.
-    Login de usuário: Autenticação de usuário com email e senha, gerando um token JWT.
+- **Registro de usuário**: Criação de um novo usuário com nome, email e senha.
+- **Login de usuário**: Autenticação de usuário com email e senha, gerando um token JWT.
 
 ### Gerenciamento de Usuários
 
-    Soft Delete: Desativação de usuários sem removê-los do banco de dados.
-    Busca de Usuário por ID: Recupera os dados de um usuário específico (exceto a senha).
+- **Soft Delete**: Desativação de usuários sem removê-los do banco de dados.
+- **Busca de Usuário por ID**:: Recupera os dados de um usuário específico (exceto a senha).
 
 ### Gerenciamento de Produtos
 
-    CRUD de Produtos: Criação, leitura, atualização e remoção de produtos.
-    Importação de Produtos: Importação de produtos a partir de um arquivo JSON.
+- **CRUD de Produtos**: Criação, leitura, atualização e remoção de produtos.
+- **Importação de Produtos**: Importação de produtos a partir de um arquivo JSON.
 
 ### Carrinho de Compras (em construção)
 
-    Adição e Remoção de Itens no Carrinho: Gerenciamento do carrinho de compras do usuário.
+- **Adição e Remoção de Itens no Carrinho**: Gerenciamento do carrinho de compras do usuário.
 
 ## Estrutura do Projeto
 
@@ -160,7 +160,7 @@ Aqui estão as principais rotas da API que foram implementadas:
 
 ### Autenticação e Usuários
 
-**POST /api/users/register**
+**POST /api/users/register**<br>
 Rota para registrar um novo usuário.
 Corpo da requisição:
 
@@ -172,34 +172,34 @@ Corpo da requisição:
 }
 ```
 
-**POST /api/users/login**
+**POST /api/users/login**<br>
 Rota para realizar o login de um usuário.
 Corpo da requisição:
 
-    ```bash
+```bash
     {
     "email": "email@example.com",
     "password": "senha123"
+    }
+```
 
-}
-
-````
 Resposta:
+
 ```bash
     {
     "token": "jwt-token",
     "userId": "id-do-usuario"
 }
-````
+```
 
-**GET /api/users/**
+**GET /api/users/**<br>
 
 Rota para buscar um usuário por ID (Requer autenticação).
 Cabeçalho:
 
     Authorization: Bearer {token}
 
-**PATCH /api/users/soft-delete/**
+**PATCH /api/users/soft-delete/**<br>
 
 Rota para realizar o soft delete de um usuário por ID (Requer autenticação).
 Cabeçalho:
