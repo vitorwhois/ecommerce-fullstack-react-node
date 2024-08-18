@@ -38,3 +38,63 @@ export const getProductsByName = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Erro ao buscar produtos' });
     }
 };
+
+export const createProduct = async (req: Request, res: Response) => {
+    try {
+        const { productName, descriptionShort, photo, price } = req.body;
+
+        const newProduct = new Product({
+            productName,
+            descriptionShort,
+            photo,
+            price,
+        });
+
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao criar produto' });
+    }
+};
+
+export const updateProduct = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { productName, descriptionShort, photo, price } = req.body;
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            id,
+            { productName, descriptionShort, photo, price },
+            { new: true, runValidators: true }
+        );
+
+        if (updatedProduct) {
+            res.status(200).json(updatedProduct);
+        } else {
+            res.status(404).json({ message: 'Produto não encontrado' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao atualizar produto' });
+    }
+};
+
+
+export const deleteProduct = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const deletedProduct = await Product.findByIdAndDelete(id);
+
+        if (deletedProduct) {
+            res.status(200).json({ message: 'Produto deletado com sucesso' });
+        } else {
+            res.status(404).json({ message: 'Produto não encontrado' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao deletar produto' });
+    }
+};
+

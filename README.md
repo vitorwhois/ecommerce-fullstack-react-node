@@ -104,7 +104,7 @@ O objetivo principal do projeto é criar uma API e um frontend responsivo para u
 ### Gerenciamento de Usuários
 
 - **Soft Delete**: Desativação de usuários sem removê-los do banco de dados.
-- **Busca de Usuário por ID**:: Recupera os dados de um usuário específico (exceto a senha).
+- **Busca de Usuário por ID**: Recupera os dados de um usuário específico (exceto a senha).
 
 ### Gerenciamento de Produtos
 
@@ -161,7 +161,7 @@ Aqui estão as principais rotas da API que foram implementadas:
 ### Autenticação e Usuários
 
 **POST /api/users/register**<br>
-Rota para registrar um novo usuário.
+Rota para registrar um novo usuário.<br>
 Corpo da requisição:
 
 ```bash
@@ -173,7 +173,7 @@ Corpo da requisição:
 ```
 
 **POST /api/users/login**<br>
-Rota para realizar o login de um usuário.
+Rota para realizar o login de um usuário.<br>
 Corpo da requisição:
 
 ```bash
@@ -194,14 +194,14 @@ Resposta:
 
 **GET /api/users/**<br>
 
-Rota para buscar um usuário por ID (Requer autenticação).
+Rota para buscar um usuário por ID (Requer autenticação).<br>
 Cabeçalho:
 
     Authorization: Bearer {token}
 
 **PATCH /api/users/soft-delete/**<br>
 
-Rota para realizar o soft delete de um usuário por ID (Requer autenticação).
+Rota para realizar o soft delete de um usuário por ID (Requer autenticação).<br>
 Cabeçalho:
 
     Authorization: Bearer {token}
