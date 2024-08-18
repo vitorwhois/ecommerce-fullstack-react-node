@@ -59,6 +59,35 @@ export const softDeleteUser = async (req: Request, res: Response) => {
     }
 };
 
+export const hardDeleteUser = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) return res.status(404).json({ message: ErrorMessages.notFound.message });
+
+        res.json({ message: SuccessMessages.userDeleted.message });
+    } catch (error) {
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
+    }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        const updates = req.body;
+
+        // Encontrar e atualizar o usuário
+        const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
+
+        if (!updatedUser) return res.status(404).json({ message: ErrorMessages.notFound.message });
+
+        res.json({ user: updatedUser, message: SuccessMessages.userUpdated.message });
+    } catch (error) {
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
+    }
+};
+
 export const getUserById = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;

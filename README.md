@@ -103,6 +103,7 @@ O objetivo principal do projeto é criar uma API e um frontend responsivo para u
 
 ### Gerenciamento de Usuários
 
+- **CRUD de Usuários**: Criação, leitura, atualização e remoção de usuários.
 - **Soft Delete**: Desativação de usuários sem removê-los do banco de dados.
 - **Busca de Usuário por ID**: Recupera os dados de um usuário específico (exceto a senha).
 
@@ -130,7 +131,7 @@ A estrutura do projeto está organizada conforme as melhores práticas para dese
 │   ├── models/             # Modelos do Mongoose
 │   ├── routes/             # Definição das rotas
 │   ├── scripts/            # Scripts utilitários (ex.: importação de produtos)
-│   ├── utils/              # Funções utilitárias, como tratamento de erros
+│   ├── utils/              # Funções utilitárias, como tratamento de erros e pdrão de mensagens
 │   └── app.ts              # Configuração principal do servidor Express
 │
 ├── .env                    # Variáveis de ambiente
@@ -192,16 +193,113 @@ Resposta:
 }
 ```
 
-**GET /api/users/**<br>
+**GET /api/users/:id**<br>
 
 Rota para buscar um usuário por ID (Requer autenticação).<br>
 Cabeçalho:
 
     Authorization: Bearer {token}
 
-**PATCH /api/users/soft-delete/**<br>
+**PATCH /api/users/:id**<br>
 
-Rota para realizar o soft delete de um usuário por ID (Requer autenticação).<br>
+Rota para atualiza as informações de um usuário.<br>
+
 Cabeçalho:
 
     Authorization: Bearer {token}
+
+Corpo da Requisição:
+
+```bash
+    {
+    "name": "Novo Nome",
+    "email": "novoemail@exemplo.com"
+    }
+```
+
+Resposta de Sucesso:
+
+```bash
+{
+  "user": {
+    "name": "Novo Nome",
+    "email": "novoemail@exemplo.com",
+    "isActive": true
+  },
+  "message": "Usuário atualizado com sucesso"
+}
+```
+
+Resposta de Erro:
+
+```bash
+{
+  "message": "Usuário não encontrado"
+}
+```
+
+**PATCH /api/users/delete/:id**<br>
+
+Rota para realizar o Soft delete de um usuário por ID (Requer autenticação).<br>
+Cabeçalho:
+
+    Authorization: Bearer {token}
+
+Resposta de Sucesso:
+
+```bash
+{
+  "message": "Usuário desativado com sucesso"
+}
+```
+
+Resposta de Erro:
+
+```bash
+{
+"message": "Usuário não encontrado"
+}
+```
+
+**DELETE /api/delete/:id/hard**<br>
+
+Remove permanentemente o usuário do banco de dados.
+
+```bash
+{
+  "message": "Usuário removido  do com sucesso"
+}
+```
+
+## API de Produtos
+
+### Criar Produto
+
+- **Método:** `POST`
+- **Rota:** `/products`
+- **Descrição:** Cria um novo produto.
+- **Corpo da Requisição:**
+  ```json
+  {
+    "name": "Nome do Produto",
+    "description": "Descrição do produto",
+    "price": 100,
+    "stock": 50
+  }
+  ```
+
+### Listar todos os Produtos
+
+**GET /api/products/products**
+
+### Lista Produto especificamente
+
+**GET /api/products/:id**
+
+### Atualizar Produto
+
+**PUT /api/:id**
+
+### Deletar Produto
+
+**DELETE /api/:id**
