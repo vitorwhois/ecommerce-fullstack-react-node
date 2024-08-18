@@ -2,15 +2,15 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
-import * as Errors from '../utils/errors';
-import { SuccessResponse } from '../utils/success';
+import { ErrorMessages } from '../utils/errors';
+import { SuccessMessages } from '../utils/success';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
 
         const userExists = await User.findOne({ email });
-        if (userExists) return res.status(400).json({type: Errors.AlreadyExistsError });
+        if (userExists) return res.status(400).json({ message: ErrorMessages.alreadyExists.message });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -22,9 +22,9 @@ export const registerUser = async (req: Request, res: Response) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
 
-        res.status(201).json({type: SuccessResponse.userCreated });
+        res.status(SuccessMessages.userCreated.statusCode).json({ message: SuccessMessages.userCreated.message, token, userId: user._id });
     } catch (error) {
-        res.status(500).json({type: Errors.InternalServerError  });
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
     }
 };
 
@@ -33,16 +33,16 @@ export const loginUser = async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ type: Errors.NotFoundError });
+        if (!user) return res.status(404).json({ message: ErrorMessages.notFound.message });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({type: Errors.UnauthorizedError });
+        if (!isMatch) return res.status(401).json({ message: ErrorMessages.unauthorized.message });
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
 
         res.json({ token, userId: user._id });
     } catch (error) {
-        res.status(500).json({ type: Errors.InternalServerError });
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
     }
 };
 
@@ -51,11 +51,11 @@ export const softDeleteUser = async (req: Request, res: Response) => {
         const userId = req.params.id;
         const user = await User.findByIdAndUpdate(userId, { isActive: false }, { new: true });
 
-        if (!user) return res.status(404).json({ type: Errors.NotFoundError });
+        if (!user) return res.status(404).json({ message: ErrorMessages.notFound.message });
 
-        res.json({ message: 'Usuário desativado com sucesso' });
+        res.json({ message: SuccessMessages.userDeleted.message });
     } catch (error) {
-        res.status(500).json({ type: Errors.InternalServerError });
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
     }
 };
 
@@ -64,10 +64,10 @@ export const getUserById = async (req: Request, res: Response) => {
         const userId = req.params.id;
         const user = await User.findById(userId).select('-password');
 
-        if (!user) return res.status(404).json({type: Errors.NotFoundError });
+        if (!user) return res.status(404).json({ message: ErrorMessages.notFound.message });
 
-        res.json(user);
+        res.json({ user, message: SuccessMessages.userRetrieved.message });
     } catch (error) {
-        res.status(500).json({ message: Errors.InternalServerError });
+        res.status(500).json({ message: ErrorMessages.internalServerError.message });
     }
 };

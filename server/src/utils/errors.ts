@@ -29,7 +29,6 @@ export class AlreadyExistsError extends CustomError {
     }
 }
 
-
 export class UnauthorizedError extends CustomError {
     constructor(message = "Unauthorized access") {
         super(message, 401);
@@ -41,3 +40,27 @@ export class InternalServerError extends CustomError {
         super(message, 500);
     }
 }
+
+
+export const ErrorMessages = {
+    notFound: {
+        message: "Resource not found",
+        statusCode: 404
+    },
+    validationError: {
+        message: "Validation failed",
+        statusCode: 400
+    },
+    alreadyExists: {
+        message: "Already exists",
+        statusCode: 400
+    },
+    unauthorized: {
+        message: "Unauthorized access",
+        statusCode: 401
+    },
+    internalServerError: {
+        message: "Internal Server Error",
+        statusCode: 500
+    }
+};
